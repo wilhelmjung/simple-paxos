@@ -7,6 +7,12 @@ import (
 	"time"
 )
 
+//RecvBufSize : recv buffer size used in server recv loop.
+const RecvBufSize int = 1024 * 4
+
+//LocalIPAddr : local IP address
+const LocalIPAddr = "127.0.0.1"
+
 //ITransport - interface of tranport class
 type ITransport interface {
 	Start() error
@@ -42,9 +48,6 @@ func (t UDPTransport) getServerAddress(serverID uint32) string {
 	addr := ids2addr(0, serverID)
 	return addr
 }
-
-//RecvBufSize : recv buffer size used in server recv loop.
-const RecvBufSize int = 1024 * 4
 
 //Start : start a UDP server loop
 func (t UDPTransport) Start() error {
@@ -141,9 +144,6 @@ func ids2addr(src, dst uint32) string {
 	str := fmt.Sprintf("127.0.0.1:5%02d%02d", src, dst)
 	return str
 }
-
-//LocalIPAddr : local IP address
-const LocalIPAddr = "127.0.0.1"
 
 func newUDPAddr(src, dst uint32) *net.UDPAddr {
 	addr := net.UDPAddr{

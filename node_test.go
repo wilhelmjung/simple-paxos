@@ -4,29 +4,27 @@ import (
 	"log"
 	"testing"
 	"time"
-	//"fmt"
 )
 
-func Test2Nodes(t *testing.T) {
-	n1 := NewNodeLoad("node1.cfg")
-	n2 := NewNodeLoad("node2.cfg")
+func TestTwoNodes(t *testing.T) {
+	n1 := NewNodeLoad("node11.cfg")
+	n2 := NewNodeLoad("node12.cfg")
 	n1.Start()
 	n2.Start()
-	n, err := n1.SendTo(2, []byte("xxx,foo"))
+
+	n, err := n1.SendTo(12, []byte("xxx,foo"))
 	if n == 0 || err != nil {
 		t.Errorf("n1.SendTo:%s\n", err)
 	}
-
-	n, err = n2.SendTo(1, []byte("xxx,bar"))
+	n, err = n2.SendTo(11, []byte("xxx,bar"))
 	if n == 0 || err != nil {
 		t.Errorf("n2.SendTo:%s\n", err)
 	}
-	for i := 0; i < 2; i++ {
-		time.Sleep(time.Second)
-	}
+
+	time.Sleep(time.Second)
 }
 
-func TestNode(t *testing.T) {
+func testFourNodes(t *testing.T) {
 	n1 := NewNodeLoad("node1.cfg")
 	n2 := NewNodeLoad("node2.cfg")
 	n3 := NewNodeLoad("node3.cfg")
@@ -55,7 +53,5 @@ func TestNode(t *testing.T) {
 		}
 	}
 
-	for i := 0; i < rnd+1; i++ {
-		time.Sleep(time.Second)
-	}
+	time.Sleep(time.Second)
 }
